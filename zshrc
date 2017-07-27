@@ -13,11 +13,19 @@ zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 autoload -Uz compinit
 compinit
 
+autoload -U select-word-style
+select-word-style bash
+
 HISTFILE=~/.histfile
 HISTSIZE=5000
 SAVEHIST=10000
 setopt appendhistory autocd extendedglob notify
 bindkey -e
+
+if [[ -d /usr/share/fzf ]]; then
+    source /usr/share/fzf/completion.zsh
+    source /usr/share/fzf/key-bindings.zsh
+fi
 
 # my key bindings
 bindkey '^P' history-search-backward
