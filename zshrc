@@ -31,8 +31,15 @@ function get_pwd() {
   echo ${PWD/$HOME/~}
 }
 
+check_exit_code() {
+    LAST=$?
+    if [[ $LAST -ne 0 ]]; then
+        echo "%k%B%F{red}${LAST}%f%b "
+    fi
+}
+
 PROMPT='%B%F{blue}%4~ %K{5}%F{7}%T
-%k%b%F{105}»%f '
+$(check_exit_code)%k%b%F{105}»%f '
 
 export $(gnome-keyring-daemon --start)
 
