@@ -31,8 +31,8 @@ function get_pwd() {
   echo ${PWD/$HOME/~}
 }
 
-PROMPT='%F{green}%B%m: %F{blue}%~ %K{5}%F{7}%T
-%k%f%b→ '
+PROMPT='%B%F{blue}%4~ %K{5}%F{7}%T
+%k%b%F{105}»%f '
 
 export $(gnome-keyring-daemon --start)
 
@@ -67,7 +67,7 @@ zstyle ':vcs_info:git*+set-message:*' hooks git-untracked
 
 git_status_count() {
   awk '
-    BEGIN { staged = 0; unstaged = 0; }
+    BEGIN { staged = 0; unstaged = 0; untracked = 0 }
     /^[A-Z] / { staged+=1; }
     /^ [A-Z]/ { unstaged+=1; }
     /^\?\?/ { untracked+=1; }
@@ -108,6 +108,10 @@ git_distance() {
 
         if [[ $staged != 0 ]]; then
           hook_com[staged]="%F{3}●$staged"
+        fi
+
+        if [[ $untracked == 0 && $unstaged == 0 && $staged == 0 ]]; then
+          hook_com[misc]="%b%F{green}✔"
         fi
     fi
 
