@@ -34,6 +34,7 @@ bindkey '^N' history-search-forward
 # aliases
 alias vi=vim
 alias ls='ls --color'
+alias grep='grep --color'
 
 function get_pwd() {
   echo ${PWD/$HOME/~}
