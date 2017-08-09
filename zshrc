@@ -85,6 +85,7 @@ git_status_count() {
     BEGIN { staged = 0; unstaged = 0; untracked = 0 }
     /^[A-Z] / { staged+=1; }
     /^ [A-Z]/ { unstaged+=1; }
+    /^[A-Z][A-Z]/ { staged+=1; unstaged+=1; }
     /^\?\?/ { untracked+=1; }
     END {
       printf "staged=%s\n",staged
