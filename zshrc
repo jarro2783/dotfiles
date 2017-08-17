@@ -1,5 +1,7 @@
 eval `dircolors`
 
+typeset -U path
+
 export EDITOR=vim
 export PAGER=less
 
@@ -53,7 +55,7 @@ $(check_exit_code)%k%b%F{105}»%f '
 export $(gnome-keyring-daemon --start)
 
 export GOPATH=$HOME/src/go
-export PATH=$PATH:$HOME/local/src/arcanist/bin:$HOME/src/go/bin:$HOME/.gem/ruby/2.1.0/bin
+path=($HOME/src/go/bin $path)
 
 # coloured man pages
 man() {
@@ -86,6 +88,7 @@ git_status_count() {
     BEGIN { staged = 0; unstaged = 0; untracked = 0 }
     /^[A-Z] / { staged+=1; }
     /^ [A-Z]/ { unstaged+=1; }
+    /^[A-Z][A-Z]/ { staged+=1; unstaged+=1; }
     /^\?\?/ { untracked+=1; }
     END {
       printf "staged=%s\n",staged
